@@ -4,9 +4,10 @@
 	$('.cmb-post-search-ajax').each(
 		function () {
 
-			var fid 		= $(this).attr('id');
-			var query_args 	= $(this).attr('data-queryargs');
-			var object		= $(this).attr('data-object');
+			var fid = $(this).attr('id');
+			var query_args = $(this).attr('data-queryargs');
+			var object = $(this).attr('data-object');
+      var show_thumb = $(this).attr('data-thumb');
 			$(this).devbridgeAutocomplete({
 				serviceUrl: psa.ajaxurl,
 				type: 'POST',
@@ -15,11 +16,11 @@
 				transformResult: function(r) {
 					var suggestions = $.parseJSON(r);
 					if($('#'+fid+'_results li').length){
-						var selected_vals 	= Array();
-						var d 				= 0;
+						var selected_vals = Array();
+						var d = 0;
 						$('#'+fid+'_results input').each(function(index, element) {
-                            selected_vals.push( $(this).val() );
-                        });
+              selected_vals.push( $(this).val() );
+            });
 						$(suggestions).each(function(ri, re){
 							if($.inArray((re.data).toString(), selected_vals) > -1){
 								suggestions.splice(ri-d, 1);
@@ -32,6 +33,11 @@
 					});
 					return {suggestions: suggestions};
 				},
+        formatResult: function (suggestion, currentValue) {
+          var thumb = (show_thumb == 1) ? '<img src="'+suggestion.img+'" /> ' : '';
+
+          return '<div>'+thumb+$.Autocomplete.formatResult(suggestion, currentValue)+'</div>';
+        },
 				params:{
 					action  	: 'cmb_post_search_ajax_get_results',
 					psacheck	: psa.nonce,
@@ -51,7 +57,8 @@
 					var sortable = $(this).attr('data-sortable');
 					if( limit > 1 ){
 						var handle = (sortable == 1) ? '<span class="hndl"></span>' : '';
-						$('#'+lid).append('<li>'+handle+'<input type="hidden" name="'+lid+'[]" value="'+suggestion.data+'"><a href="'+suggestion.guid+'" target="_blank" class="edit-link">'+suggestion.value+'</a><a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a><div><img style="margin-top: .5em" src="' + suggestion.img + '" /></div></li>');
+            var thumb = (show_thumb == 1) ? '<img style="margin-top: .5em" src="'+suggestion.img+'" />' : '';
+						$('#'+lid).append('<li>'+handle+'<input type="hidden" name="'+lid+'[]" value="'+suggestion.data+'"><a href="'+suggestion.guid+'" target="_blank" class="edit-link">'+suggestion.value+'</a><a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a><div>'+thumb+'</div></li>');
 						$(this).val('');
 						if( limit === $('#' + lid + ' li').length ){
 							$(this).prop( 'disabled', 'disabled' );

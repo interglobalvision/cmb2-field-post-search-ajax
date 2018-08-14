@@ -59,7 +59,8 @@ if( ! class_exists( 'MAG_CMB2_Field_Post_Search_Ajax' ) ) {
 							$title	= get_the_title($val);
               $img    = get_the_post_thumbnail_url($val, 'admin-thumb');
 						}
-						echo '<li>'.$handle.'<input type="hidden" name="'.$field_name.'_results[]" value="'.$val.'"><a href="'.$guid.'" target="_blank" class="edit-link">'.$title.'</a><a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a><div><img style="margin-top: .5em" src="'.$img.'" /></div></li>';
+            $thumb = $field->args( 'show_thumb' ) ? '<img style="margin-top: .5em" src="'.$img.'" />' : '';
+						echo '<li>'.$handle.'<input type="hidden" name="'.$field_name.'_results[]" value="'.$val.'"><a href="'.$guid.'" target="_blank" class="edit-link">'.$title.'</a><a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a><div>'.$thumb.'</div></li>';
 					}
 				}
 				echo '</ul>';
@@ -91,7 +92,8 @@ if( ! class_exists( 'MAG_CMB2_Field_Post_Search_Ajax' ) ) {
 				'data-limit'	=> $field->args( 'limit' ) ? $field->args( 'limit' ) : '1',
 				'data-sortable'	=> $field->args( 'sortable' ) ? $field->args( 'sortable' ) : '0',
 				'data-object'	=> $field->args( 'object_type' ) ? $field->args( 'object_type' ) : 'post',
-				'data-queryargs'=> $field->args( 'query_args' ) ? htmlspecialchars( json_encode( $field->args( 'query_args' ) ), ENT_QUOTES, 'UTF-8' ) : ''
+				'data-queryargs'=> $field->args( 'query_args' ) ? htmlspecialchars( json_encode( $field->args( 'query_args' ) ), ENT_QUOTES, 'UTF-8' ) : '',
+        'data-thumb'=> $field->args( 'show_thumb' ) ? $field->args( 'show_thumb' ) : '0'
 			) );
 
 			echo '<img src="'.admin_url( 'images/spinner.gif' ).'" class="cmb-post-search-ajax-spinner" />';
