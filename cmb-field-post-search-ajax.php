@@ -57,9 +57,9 @@ if( ! class_exists( 'MAG_CMB2_Field_Post_Search_Ajax' ) ) {
 						else{
 							$guid 	= get_edit_post_link($val);
 							$title	= get_the_title($val);
-              $img    = get_the_post_thumbnail_url($val, 'admin-thumb');
+              $img    = get_the_post_thumbnail_url($val, array( 150, 150 ));
 						}
-            $thumb = $field->args( 'show_thumb' ) ? '<img style="margin-top: .5em" src="'.$img.'" />' : '';
+            $thumb = $field->args( 'show_thumb' ) ? '<img style="margin-top: .5em" width="100" src="'.$img.'" />' : '';
 						echo '<li>'.$handle.'<input type="hidden" name="'.$field_name.'_results[]" value="'.$val.'"><a href="'.$guid.'" target="_blank" class="edit-link">'.$title.'</a><a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a><div>'.$thumb.'</div></li>';
 					}
 				}
@@ -195,7 +195,7 @@ if( ! class_exists( 'MAG_CMB2_Field_Post_Search_Ajax' ) ) {
 								'value' => get_the_title(),
 								'data'	=> get_the_ID(),
 								'guid'	=> get_edit_post_link(),
-                'img'   => get_the_post_thumbnail_url(null, 'admin-thumb')
+                'img'   => get_the_post_thumbnail_url(null, array( 150, 150 ))
 							) );
 						endwhile;
 					endif;

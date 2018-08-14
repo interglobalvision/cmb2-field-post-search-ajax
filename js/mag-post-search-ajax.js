@@ -34,9 +34,9 @@
 					return {suggestions: suggestions};
 				},
         formatResult: function (suggestion, currentValue) {
-          var thumb = (show_thumb == 1) ? '<img src="'+suggestion.img+'" /> ' : '';
+          var thumb = (show_thumb == 1) ? '<img style="margin-top: .5em" src="'+suggestion.img+'" width="100" /> ' : '';
 
-          return '<div>'+thumb+$.Autocomplete.formatResult(suggestion, currentValue)+'</div>';
+          return '<div><div>'+$.Autocomplete.formatResult(suggestion, currentValue)+'</div>'+thumb+'</div>';
         },
 				params:{
 					action  	: 'cmb_post_search_ajax_get_results',
@@ -57,7 +57,7 @@
 					var sortable = $(this).attr('data-sortable');
 					if( limit > 1 ){
 						var handle = (sortable == 1) ? '<span class="hndl"></span>' : '';
-            var thumb = (show_thumb == 1) ? '<img style="margin-top: .5em" src="'+suggestion.img+'" />' : '';
+            var thumb = (show_thumb == 1) ? '<img style="margin-top: .5em" src="'+suggestion.img+'" width="100" />' : '';
 						$('#'+lid).append('<li>'+handle+'<input type="hidden" name="'+lid+'[]" value="'+suggestion.data+'"><a href="'+suggestion.guid+'" target="_blank" class="edit-link">'+suggestion.value+'</a><a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a><div>'+thumb+'</div></li>');
 						$(this).val('');
 						if( limit === $('#' + lid + ' li').length ){
